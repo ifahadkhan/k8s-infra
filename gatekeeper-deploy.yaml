@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gatekeeper-deploy
+spec:
+  replicas: 2 
+  selector:
+    matchLabels:
+      app: gatekeeper-api
+  template:
+    metadata:
+      labels:
+        app: gatekeeper-api
+    spec:
+      containers:
+        - name: gatekeeper-api
+          image:  docfahad/synapse:gatekeeper-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gatekeeper-api-service
+spec:
+  type: ClusterIP
+  selector:
+    app: gatekeeper-api
+  ports:
+    - name: gatekeeper-api-service
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+      
+          

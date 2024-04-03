@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pick-command-handler-deploy
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: pick-command-handler
+  template:
+    metadata:
+      labels:
+        app: pick-command-handler
+    spec:
+      containers:
+        - name: pick-command-handler
+          image:  docfahad/synapse:pick-command-handler 

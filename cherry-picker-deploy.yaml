@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cherry-picker-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cherry-picker-api
+  template:
+    metadata:
+      labels:
+        app: cherry-picker-api
+    spec:
+      containers:
+        - name: cherry-picker-api
+          image:  docfahad/synapse:cherry-picker-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cherry-picker-api-clusterip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: cherry-picker-api
+  ports:
+    - name: cherry-picker-api-clusterip-service
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+      
+          

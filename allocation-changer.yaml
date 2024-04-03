@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: allocation-changer-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: allocation-changer-api
+  template:
+    metadata:
+      labels:
+        app: allocation-changer-api
+    spec:
+      containers:
+        - name: allocation-changer-api
+          image:  docfahad/synapse:allocation-changer-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: allocation-changer-api-clusterip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: allocation-changer-api
+  ports:
+    - name: allocation-changer-api-clusterip-service
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+      
+          

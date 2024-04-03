@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: apigateway-service
+spec:
+  type: NodePort #LoadBalancer #
+  selector:
+    app: apigateway
+  ports:
+    - name: apigateway-service
+      protocol: TCP
+      port: 7090
+      targetPort: 8080
+      #nodePort: 32000

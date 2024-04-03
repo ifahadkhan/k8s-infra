@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pick-job-assigner-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pick-job-assigner-api
+  template:
+    metadata:
+      labels:
+        app: pick-job-assigner-api
+    spec:
+      containers:
+        - name: pick-job-assigner-api
+          image:  docfahad/synapse:pick-job-assigner-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pick-job-assigner-api-clusterip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: pick-job-assigner-api
+  ports:
+    - name: pick-job-assigner-api-clusterip-service
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+      
+          
