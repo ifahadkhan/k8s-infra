@@ -12,6 +12,15 @@ spec:
       labels:
         app: rabbitmq
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: rabbit-storage
+                operator: In
+                values:
+                - ssd
       containers:
         - name: rabbitmq
           image: rabbitmq:3-management
