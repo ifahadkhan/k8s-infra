@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: query-engine-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: query-engine-api
+  template:
+    metadata:
+      labels:
+        app: query-engine-api
+    spec:
+      containers:
+        - name: query-engine-api
+          image:  docfahad/synapse:query-engine-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: query-engine-api-clusterip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: query-engine-api
+  ports:
+    - name: query-engine-api-clusterip-service
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+      
+          
