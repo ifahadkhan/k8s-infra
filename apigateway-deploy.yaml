@@ -15,3 +15,4 @@ spec:
       containers:
         - name: apigateway
           image:  docfahad/synapse:api-gateway
+          imagePullPolicy: Always
