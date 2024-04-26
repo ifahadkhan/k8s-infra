@@ -15,6 +15,7 @@ spec:
       containers:
         - name: allocation-changer-api
           image:  docfahad/synapse:allocation-changer-api
+          imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
