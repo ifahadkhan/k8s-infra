@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: print-engine-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: print-engine-deploy
+  template:
+    metadata:
+      labels:
+        app: print-engine-deploy
+    spec:
+      containers:
+        - name: print-engine-deploy
+          image:  docfahad/synapse:print-engine-api
+          volumeMounts:
+           - name: nfs
+             mountPath: /app/cmdfiles
+      volumes:
+       - name: nfs
+         persistentVolumeClaim:
+          claimName: nfs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: print-engine-api-clusterip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: print-engine-api
+  ports:
+    - name: print-engine-api-clusterip-service
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+      
+          
