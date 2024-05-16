@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hangfire-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hangfire-api
+  template:
+    metadata:
+      labels:
+        app: hangfire-api
+    spec:
+      containers:
+        - name: hangfire-api
+          image:  docfahad/synapse:hangfire-api
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hangfire-api-clusterip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: hangfire-api
+  ports:
+    - name: hangfire-api-clusterip-service
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hangfire-api-manage-service
+spec:
+  type: ClusterIP
+  selector:
+    app: hangfire-api
+  ports:
+    - name: hangfire-api-manage-service
+      protocol: TCP
+      port: 80
+      targetPort: 8081
+      
+          
