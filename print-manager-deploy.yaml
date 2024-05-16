@@ -6,15 +6,16 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: print-engine-deploy
+      app: print-engine-api
   template:
     metadata:
       labels:
-        app: print-engine-deploy
+        app: print-engine-api
     spec:
       containers:
-        - name: print-engine-deploy
+        - name: print-engine-api
           image:  docfahad/synapse:print-engine-api
+          imagePullPolicy: Always
           volumeMounts:
            - name: nfs
              mountPath: /app/cmdfiles
