@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-issues-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-issues-api
+  template:
+    metadata:
+      labels:
+        app: stock-issues-api
+    spec:
+      containers:
+        - name: stock-issues-api
+          image:  docfahad/synapse:stock-issues-api
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stock-issues-api-clusterip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: stock-issues-api
+  ports:
+    - name: stock-issues-api-clusterip-service
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+      
+          
