@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-transfer-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-transfer-api
+  template:
+    metadata:
+      labels:
+        app: stock-transfer-api
+    spec:
+      containers:
+        - name: stock-transfer-api
+          image:  docfahad/synapse:stock-transfer-api
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stock-transfer-api-clusterip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: stock-transfer-api
+  ports:
+    - name: stock-transfer-api-clusterip-service
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+      
+          
