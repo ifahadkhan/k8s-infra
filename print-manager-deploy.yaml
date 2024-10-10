@@ -19,10 +19,16 @@ spec:
           volumeMounts:
            - name: nfs
              mountPath: /app/cmdfiles
+           - name: tz-config
+             mountPath:  /etc/localtime
       volumes:
        - name: nfs
          persistentVolumeClaim:
           claimName: nfs
+       - name: tz-config
+         hostPath:
+              path: /usr/share/zoneinfo/Europe/London
+              type: File
 ---
 apiVersion: v1
 kind: Service

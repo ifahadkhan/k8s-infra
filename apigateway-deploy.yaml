@@ -16,3 +16,11 @@ spec:
         - name: apigateway
           image:  docfahad/synapse:api-gateway
           imagePullPolicy: Always
+          volumeMounts:
+          - name: tz-config
+            mountPath:  /etc/localtime
+      volumes:
+       - name: tz-config
+         hostPath:
+              path: /usr/share/zoneinfo/Europe/London
+              type: File

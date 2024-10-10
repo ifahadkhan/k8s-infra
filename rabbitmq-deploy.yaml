@@ -32,6 +32,8 @@ spec:
           volumeMounts:
           - name: queue-storage
             mountPath: /var/lib/rabbitmq/mnesia
+          - name: tz-config
+            mountPath:  /etc/localtime
           #- name: rabbitmq-config
           #  mountPath: /etc/rabbitmq/conf.d
       hostname: rabbitmq
@@ -39,6 +41,10 @@ spec:
         - name: queue-storage
           persistentVolumeClaim:
             claimName: rabbitmq-pvc
+        - name: tz-config
+          hostPath:
+              path: /usr/share/zoneinfo/Europe/London
+              type: File
         #- name: rabbitmq-config
         #  configMap: 
         #    name: rabbitmq-config

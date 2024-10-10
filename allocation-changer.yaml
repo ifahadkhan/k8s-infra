@@ -16,6 +16,14 @@ spec:
         - name: allocation-changer-api
           image:  docfahad/synapse:allocation-changer-api
           imagePullPolicy: Always
+          volumeMounts:
+          - name: tz-config
+            mountPath:  /etc/localtime
+      volumes:
+       - name: tz-config
+         hostPath:
+              path: /usr/share/zoneinfo/Europe/London
+              type: File
 ---
 apiVersion: v1
 kind: Service

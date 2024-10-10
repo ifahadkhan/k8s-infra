@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: cherry-picker-deploy
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: cherry-picker-api
@@ -16,6 +16,14 @@ spec:
         - name: cherry-picker-api
           image:  docfahad/synapse:cherry-picker-api
           imagePullPolicy: Always
+          volumeMounts:
+          - name: tz-config
+            mountPath:  /etc/localtime
+      volumes:
+       - name: tz-config
+         hostPath:
+              path: /usr/share/zoneinfo/Europe/London
+              type: File
 ---
 apiVersion: v1
 kind: Service

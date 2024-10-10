@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: cherry-packer-deploy
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
       app: cherry-packer-api
@@ -16,6 +16,14 @@ spec:
         - name: cherry-packer-api
           image:  docfahad/synapse:cherry-packer-api
           imagePullPolicy: Always
+          volumeMounts:
+          - name: tz-config
+            mountPath:  /etc/localtime
+      volumes:
+       - name: tz-config
+         hostPath:
+              path: /usr/share/zoneinfo/Europe/London
+              type: File
 ---
 apiVersion: v1
 kind: Service
