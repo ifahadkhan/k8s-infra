@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: replen-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: replen-api
+  template:
+    metadata:
+      labels:
+        app: replen-api
+    spec:
+      containers:
+        - name: replen-api
+          image:  docfahad/synapse:replen-api
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: replen-api-clusterip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: replen-api
+  ports:
+    - name: replen-api-clusterip-service
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+      
+          
