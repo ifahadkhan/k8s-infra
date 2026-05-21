@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: apigateway-service
 spec:
-  type: NodePort #LoadBalancer #
+  type: LoadBalancer #NodePort 
   selector:
     app: apigateway
   ports:

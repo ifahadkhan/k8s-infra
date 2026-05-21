@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: allocation-changer-deploy
+  name: cherry-packer-deploy
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
-      app: allocation-changer-api
+      app: cherry-packer-api
   template:
     metadata:
       labels:
-        app: allocation-changer-api
+        app: cherry-packer-api
     spec:
       containers:
-        - name: allocation-changer-api
-          image:  docfahad/synapse:allocation-changer-api
+        - name: cherry-packer-api
+          image:  docfahad/synapse:cherry-packer-api
           imagePullPolicy: Always
           volumeMounts:
           - name: tz-config
@@ -28,13 +28,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: allocation-changer-api-clusterip-service
+  name: cherry-packer-api-clusterip-service
 spec:
   type: ClusterIP
   selector:
-    app: allocation-changer-api
+    app: cherry-packer-api
   ports:
-    - name: allocation-changer-api-clusterip-service
+    - name: cherry-packer-api-clusterip-service
       protocol: TCP
       port: 80
       targetPort: 8080

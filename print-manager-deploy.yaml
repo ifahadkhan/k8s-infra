@@ -1,25 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: allocation-changer-deploy
+  name: print-engine-deploy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: allocation-changer-api
+      app: print-engine-api
   template:
     metadata:
       labels:
-        app: allocation-changer-api
+        app: print-engine-api
     spec:
       containers:
-        - name: allocation-changer-api
-          image:  docfahad/synapse:allocation-changer-api
+        - name: print-engine-api
+          image:  docfahad/synapse:print-engine-api
           imagePullPolicy: Always
           volumeMounts:
-          - name: tz-config
-            mountPath:  /etc/localtime
+           - name: nfs
+             mountPath: /app/cmdfiles
+           - name: tz-config
+             mountPath:  /etc/localtime
       volumes:
+       - name: nfs
+         persistentVolumeClaim:
+          claimName: nfs
        - name: tz-config
          hostPath:
               path: /usr/share/zoneinfo/Europe/London
@@ -28,13 +33,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: allocation-changer-api-clusterip-service
+  name: print-engine-api-clusterip-service
 spec:
   type: ClusterIP
   selector:
-    app: allocation-changer-api
+    app: print-engine-api
   ports:
-    - name: allocation-changer-api-clusterip-service
+    - name: print-engine-api-clusterip-service
       protocol: TCP
       port: 80
       targetPort: 8080

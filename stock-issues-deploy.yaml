@@ -1,32 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gatekeeper-deploy
+  name: stock-issues-deploy
 spec:
-  replicas: 2 
+  replicas: 1
   selector:
     matchLabels:
-      app: gatekeeper-api
+      app: stock-issues-api
   template:
     metadata:
       labels:
-        app: gatekeeper-api
+        app: stock-issues-api
     spec:
       containers:
-        - name: gatekeeper-api
-          image:  docfahad/synapse:gatekeeper-api
+        - name: stock-issues-api
+          image:  docfahad/synapse:stock-issues-api
           imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: gatekeeper-api-service
+  name: stock-issues-api-clusterip-service
 spec:
   type: ClusterIP
   selector:
-    app: gatekeeper-api
+    app: stock-issues-api
   ports:
-    - name: gatekeeper-api-service
+    - name: stock-issues-api-clusterip-service
       protocol: TCP
       port: 80
       targetPort: 8080

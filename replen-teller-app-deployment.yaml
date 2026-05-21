@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: replen-teller-app-deploy
+  labels:
+    app: replen-teller-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: replen-teller-app
+  template:
+    metadata:
+      labels:
+        app: replen-teller-app
+    spec:
+      containers:
+        - name: replen-teller-app
+          image: docfahad/synapse:replen-teller-app
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: replen-teller-app-clusterip-service
+spec:
+  selector:
+    app: replen-teller-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP  # Or NodePort if LoadBalancer is not supported

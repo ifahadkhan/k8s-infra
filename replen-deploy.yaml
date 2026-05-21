@@ -1,31 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: query-engine-deploy
+  name: replen-deploy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: query-engine-api
+      app: replen-api
   template:
     metadata:
       labels:
-        app: query-engine-api
+        app: replen-api
     spec:
       containers:
-        - name: query-engine-api
-          image:  docfahad/synapse:query-engine-api
+        - name: replen-api
+          image:  docfahad/synapse:replen-api
+          imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: query-engine-api-clusterip-service
+  name: replen-api-clusterip-service
 spec:
   type: ClusterIP
   selector:
-    app: query-engine-api
+    app: replen-api
   ports:
-    - name: query-engine-api-clusterip-service
+    - name: replen-api-clusterip-service
       protocol: TCP
       port: 80
       targetPort: 8080
