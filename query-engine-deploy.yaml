@@ -15,7 +15,6 @@ spec:
       containers:
         - name: query-engine-api
           image:  docfahad/synapse:query-engine-api
-          imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
@@ -30,8 +29,5 @@ spec:
       protocol: TCP
       port: 80
       targetPort: 8080
-
-      
-
       
           
